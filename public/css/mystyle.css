@@ -1,0 +1,15 @@
+body {
+  margin: 60px 0 0 0;
+}
+
+#btn-row {
+  margin-bottom: 20px;
+}
+
+#tbl-list {
+  width: 960px;
+}
+
+ul.error {
+  color: #b94a48;
+}

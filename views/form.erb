@@ -1,0 +1,41 @@
+<div class="row">
+	<div id="conflict-warning" class="alert alert-warning fade in" style="display: none;">
+		同時編集しています
+	</div>
+</div>
+<% if @errors %>
+	<ul class="error">
+		<% @errors.each do |k, msg|
+			msg.each do |m|
+		%>
+				<li><%= k.to_s %> <%= m %></li>
+			<% end %>
+		<% end %>
+	</ul>
+<% end %>
+<div class="row">
+	<div class="span12">
+		<form action="" method="post">
+			<%= '<input type="hidden" name="_method" value="put" />' if edit? %>
+			<%= '<input type="hidden" name="id" value="' + @news.id.to_s + '" />' if edit? %>
+			<div>
+				<label><i class="icon-ok"></i> Kind</label>
+				<select name="kind">
+					<option value="">選択してください</option>
+					<% @news.kinds.each do |id, name| %>
+						<option value="<%= id %>"<%= 'selected="selected"' if @news.kind == id %>><%= name %></option>
+					<% end %>
+				</select>
+			</div>
+			<div <%= 'class="control-group error"' unless @errors[:title].empty? %>>
+				<label><i class="icon-edit"></i> Title</label>
+				<textarea class="span6" name="title" rows="4"><%= @news.title %></textarea>
+			</div>
+			<div>
+				<label><i class="icon-globe"></i> Link</label>
+				<input class="span6" type="text" name="link" value="<%= @news.link %>" 		placeholder="Please enter the link..." />
+			</div>
+			<div><input class="btn btn-primary" type="submit" value="Save" /></div>
+		</form>
+	</div>
+</div>

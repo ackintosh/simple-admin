@@ -1,0 +1,58 @@
+<% if @message %>
+<div class="row">
+	<div class="alert alert-success fade in">
+		<button type="button" class="close" data-dismiss="alert">&times;</button>
+		<%= @message %>
+	</div>
+</div>
+<% end %>
+<div id="btn-row" class="row">
+	<a href="/add" class="btn btn-primary">Add</a>
+</div>
+<div class="row">
+<table id="tbl-list" class="table table-hover table-bordered">
+	<thead>
+		<tr>
+			<th>Kind</th>
+			<th>Date</th>
+			<th>Title</th>
+			<th>Link</th>
+			<th colspan="2">Action</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% @news.each do |n| %>
+		<tr>
+			<td><span class="label"><%= n.kind_name %></span></td>
+			<td><%= n.created.strftime("%Y/%m/%d") if n.created %></td>
+			<td><%= h n.title %></td>
+			<td><a href="<%= h n.link %>" target="_blank"><%= h n.link %></a></td>
+			<td><a href="/edit/<%= n.id %>" class="btn btn-small">Edit</a></td>
+			<td>
+				<form action="" method="post" id="frm<%= n.id %>">
+					<input type="hidden" name="_method" value="delete" />
+					<input type="hidden" name="id" value="<%= n.id %>" />
+					<input type="button" value="Delete" data-id="<%= n.id %>" class="btn btn-small btn-danger confirm-delete" />
+				</form>
+			</td>
+		</tr>
+		<% end %>
+	</tbody>
+</table>
+</div>
+
+<!-- modal -->
+<div id="modal-from-dom" class="modal hide fade">
+    <div class="modal-header">
+      <h3>Confirm</h3>
+    </div>
+    <div class="modal-body">
+      <p>You are about to delete News, this procedure is irreversible.</p>
+      <p>Do you want to proceed?</p>
+    </div>
+    <div class="modal-footer">
+      <a href="javascript:$('#modal-from-dom').modal('hide');" class="btn secondary">No</a>
+      <a href="javascript:void(0);" class="btn" id="danger">Yes</a>
+    </div>
+</div>
+<!-- /modal -->
